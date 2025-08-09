@@ -1,0 +1,7 @@
+.baw-wrap .baw-row { display:flex; gap:8px; margin-bottom:6px; }
+.baw-wrap .baw-row input[type=text] { width: 380px; }
+.baw-wrap .baw-remove-row, .baw-remove-field { color:#a00; }
+.baw-fields-table input[type=text] { width: 180px; }
+.baw-fields-table select { width: 140px; }
+
+
