@@ -1,5 +1,5 @@
 === Book Appointment WP Floating Widget ===
-Contributors: yourname
+Contributors: Rishi Ratan Mishra 
 Tags: appointments, booking, whatsapp, form, floating button
 Requires at least: 5.2
 Tested up to: 6.5
