@@ -32,6 +32,12 @@
       const fd = new FormData();
       formData.forEach(({name, value})=>fd.append(name, value));
       fd.append('action', 'baw_save_settings');
+      // Pass scope so backend knows what to persist
+      if ($form.attr('id') === 'baw-settings-form') {
+        fd.append('baw_scope', 'general');
+      } else if ($form.attr('id') === 'baw-fields-form') {
+        fd.append('baw_scope', 'fields');
+      }
       $.ajax({
         url: BAW_ADMIN.ajax_url,
         method: 'POST',

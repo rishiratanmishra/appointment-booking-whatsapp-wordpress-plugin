@@ -16,7 +16,7 @@
 .baw-field input,.baw-field select,.baw-field textarea{width:100%;padding:10px;border:1px solid #ddd;border-radius:6px}
 .baw-actions{margin-top:6px;display:flex;gap:10px;justify-content:flex-end}
 .baw-submit{background:#25d366;color:#fff;border:none;border-radius:6px;padding:10px 14px;cursor:pointer}
-.baw-cancel{background:#f0f0f0;border:none;border-radius:6px;padding:10px 14px;cursor:pointer}
+.baw-cancel{background:#ad0101;border:none;border-radius:6px;padding:10px 14px;cursor:pointer}
 .baw-required{color:#d63638}
 .baw-message{margin-top:10px;color:#1d2327}
 

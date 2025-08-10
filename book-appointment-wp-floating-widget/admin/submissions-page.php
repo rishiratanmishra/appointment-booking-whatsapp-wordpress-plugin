@@ -2,17 +2,43 @@
 if (!defined('ABSPATH')) { exit; }
 
 $contacted = isset($_GET['contacted']) ? sanitize_text_field($_GET['contacted']) : '';
-$args = [];
+$page = isset($_GET['paged']) ? (int) $_GET['paged'] : 1;
+$per_page = isset($_GET['per_page']) ? (int) $_GET['per_page'] : 20;
+$args = ['page' => $page, 'per_page' => $per_page];
+if (!empty($_GET['s'])) {
+    $args['search'] = sanitize_text_field(wp_unslash($_GET['s']));
+}
 if ($contacted === '0' || $contacted === '1') {
     $args['contacted'] = $contacted;
 }
-$submissions = BAW_Database::get_submissions($args);
+$result = BAW_Database::get_submissions_page($args);
+$submissions = $result['rows'];
+$total = $result['total'];
+$pages = (int) ceil($total / max(1, $result['per_page']));
 ?>
 <div class="wrap baw-wrap">
     <h1><?php esc_html_e('Submissions', 'book-appointment-wp-floating-widget'); ?></h1>
-    <p>
+    <div style="display:flex;gap:10px;align-items:center;margin:8px 0 12px;">
+        <form method="get" action="" style="display:flex;gap:8px;align-items:center;">
+            <input type="hidden" name="page" value="baw_submissions"/>
+            <input type="search" name="s" value="<?php echo isset($_GET['s']) ? esc_attr(wp_unslash($_GET['s'])) : ''; ?>" class="regular-text baw-search" placeholder="<?php esc_attr_e('Search by id, name, phone, email...', 'book-appointment-wp-floating-widget'); ?>"/>
+            <label>
+                <?php esc_html_e('Filter', 'book-appointment-wp-floating-widget'); ?>
+                <select name="contacted" onchange="this.form.submit()">
+                    <option value=""><?php esc_html_e('All', 'book-appointment-wp-floating-widget'); ?></option>
+                    <option value="1" <?php selected($contacted, '1'); ?>><?php esc_html_e('Contacted', 'book-appointment-wp-floating-widget'); ?></option>
+                    <option value="0" <?php selected($contacted, '0'); ?>><?php esc_html_e('Not Contacted', 'book-appointment-wp-floating-widget'); ?></option>
+                </select>
+            </label>
+            <label>
+                <?php esc_html_e('Rows', 'book-appointment-wp-floating-widget'); ?>
+                <select name="per_page" onchange="this.form.submit()">
+                    <?php foreach ([10,20,50,100] as $n): ?><option value="<?php echo $n; ?>" <?php selected($per_page, $n); ?>><?php echo $n; ?></option><?php endforeach; ?>
+                </select>
+            </label>
+        </form>
         <a class="button" href="<?php echo esc_url(admin_url('admin-post.php?action=baw_export_csv')); ?>"><?php esc_html_e('Export CSV', 'book-appointment-wp-floating-widget'); ?></a>
-    </p>
+    </div>
     <form id="baw-submissions-form">
         <?php wp_nonce_field('baw_admin_nonce', 'nonce'); ?>
         <div style="margin: 8px 0;">
@@ -23,7 +49,7 @@ $submissions = BAW_Database::get_submissions($args);
             </select>
             <button type="button" class="button" id="baw-apply-bulk">Apply</button>
         </div>
-        <table class="widefat fixed striped">
+        <table class="widefat fixed striped baw-table-compact">
             <thead>
                 <tr>
                     <th><input type="checkbox" id="baw-check-all"></th>
@@ -45,6 +71,23 @@ $submissions = BAW_Database::get_submissions($args);
                 <?php endforeach; endif; ?>
             </tbody>
         </table>
+        <div class="tablenav">
+            <div class="tablenav-pages">
+                <?php if ($pages > 1): ?>
+                    <?php for ($i=1; $i<=$pages; $i++): ?>
+                        <?php
+                            $url = add_query_arg([
+                                'page' => 'baw_submissions',
+                                'contacted' => $contacted,
+                                'per_page' => $per_page,
+                                'paged' => $i,
+                            ], admin_url('admin.php'));
+                        ?>
+                        <a class="button <?php echo $i===$page ? 'button-primary' : ''; ?>" href="<?php echo esc_url($url); ?>"><?php echo $i; ?></a>
+                    <?php endfor; ?>
+                <?php endif; ?>
+            </div>
+        </div>
     </form>
     <script>
     document.addEventListener('DOMContentLoaded', function(){
