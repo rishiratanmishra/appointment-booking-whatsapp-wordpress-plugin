@@ -1,0 +1,84 @@
+/*
+Theme Name: Purze Cleaning Services Theme
+Theme URI: https://example.com/themes/purze-cleaning-services
+Author: Your Brand
+Author URI: https://example.com
+Description: A clean, modern WordPress theme for service businesses with a lead capture hero form and performance-first design.
+Version: 1.0.0
+License: GPL-2.0-or-later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: purze-theme
+Domain Path: /languages
+Tags: one-column, custom-logo, custom-colors, custom-menu, editor-style, block-styles, translation-ready
+*/
+
+:root {
+	--purze-color-primary: #FF6A00;
+	--purze-color-secondary: #0F172A;
+	--purze-color-accent: #F59E0B;
+	--purze-color-neutral: #F8FAFC;
+	--purze-radius-lg: 20px;
+	--purze-radius-md: 16px;
+	--purze-shadow-md: 0 10px 30px rgba(0, 0, 0, 0.08);
+	--purze-shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.06);
+	--purze-font-headings: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+	--purze-font-body: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--purze-color-secondary: #0B1220;
+		--purze-color-neutral: #0B1220;
+	}
+}
+
+html { scroll-behavior: smooth; }
+body {
+	margin: 0;
+	font-family: var(--purze-font-body);
+	color: var(--purze-color-secondary);
+	background: var(--purze-color-neutral);
+	line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: var(--purze-font-headings);
+	margin: 0 0 0.6em;
+	line-height: 1.2;
+}
+
+a { color: var(--purze-color-primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.purze-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+.site-header { position: sticky; top: 0; z-index: 1000; background: rgba(255,255,255,.9); backdrop-filter: saturate(180%) blur(10px); box-shadow: var(--purze-shadow-sm); }
+.site-header-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+.site-logo img { height: 40px; width: auto; }
+.primary-nav a { padding: 10px 14px; border-radius: 10px; font-weight: 600; color: var(--purze-color-secondary); }
+.primary-nav .current-menu-item > a, .primary-nav a:hover { background: #ffffff; }
+
+.purze-hero { position: relative; padding: 80px 0; background: radial-gradient(1200px 600px at 10% 20%, rgba(255,106,0,.12), transparent 60%), radial-gradient(1200px 600px at 90% 30%, rgba(245,158,11,.12), transparent 60%), linear-gradient(180deg, #ffffff, #f8fafc); }
+.purze-hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 32px; align-items: center; }
+@media (max-width: 960px) { .purze-hero-grid { grid-template-columns: 1fr; } }
+.purze-hero-card { background: rgba(255,255,255,.85); backdrop-filter: blur(6px); border-radius: var(--purze-radius-lg); box-shadow: var(--purze-shadow-md); padding: 24px; }
+
+.purze-form label { display: block; font-weight: 600; margin: 12px 0 6px; }
+.purze-form input[type="text"], .purze-form input[type="email"], .purze-form input[type="tel"], .purze-form select, .purze-form textarea { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid #e5e7eb; background: #fff; outline: none; transition: border-color .2s ease, box-shadow .2s ease; }
+.purze-form input:focus, .purze-form select:focus, .purze-form textarea:focus { border-color: var(--purze-color-primary); box-shadow: 0 0 0 4px rgba(255,106,0,.15); }
+.purze-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--purze-color-primary); color: #fff; padding: 12px 16px; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; box-shadow: var(--purze-shadow-sm); }
+.purze-button[disabled] { opacity: .7; cursor: not-allowed; }
+.purze-form .purze-message { margin-top: 12px; font-weight: 600; }
+.purze-form .purze-message.error { color: #b91c1c; }
+.purze-form .purze-message.success { color: #065f46; }
+
+.section { padding: 60px 0; }
+.section-muted { background: #ffffff; }
+.section-dark { background: #0f172a; color: #e2e8f0; }
+.trust-badges { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 768px) { .trust-badges { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.footer { background: #0b1220; color: #e2e8f0; padding: 40px 0; }
+.footer a { color: #e2e8f0; }
+
+.alignwide { max-width: 1200px; margin-left: auto; margin-right: auto; }
+.alignfull { max-width: none; }
