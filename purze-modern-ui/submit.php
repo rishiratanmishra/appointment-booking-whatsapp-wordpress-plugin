@@ -47,6 +47,7 @@ if ($hits > 5) {
 $name = sanitize_text($_POST['name'] ?? '');
 $email = sanitize_email_addr($_POST['email'] ?? '');
 $phone = normalize_phone($_POST['phone'] ?? '');
+$city = sanitize_text($_POST['city'] ?? '');
 $service = sanitize_text($_POST['service'] ?? '');
 $message = trim($_POST['message'] ?? '');
 $human = isset($_POST['human']);
@@ -55,12 +56,13 @@ $errors = [];
 if ($name === '') { $errors['name'] = 'Name is required.'; }
 if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) { $errors['email'] = 'Valid email is required.'; }
 if ($phone === '' || strlen(digits($phone)) < 7) { $errors['phone'] = 'Valid phone is required (7+ digits).'; }
+if ($city === '') { $errors['city'] = 'City is required.'; }
 if ($service === '') { $errors['service'] = 'Please select a service.'; }
 if (!$human) { $errors['human'] = 'Please confirm you are human.'; }
 if (!empty($errors)) { resp(false, 'Please correct the errors and try again.', $errors); }
 
 // Email settings
-$site_name = 'Purze Cleaning Services';
+$site_name = 'Purze Professional Services';
 $to = 'your-admin@example.com'; // TODO: change to your recipient(s), comma-separated allowed
 $from_name = 'Purze';
 $from_email = 'no-reply@example.com'; // Use a domain-verified mailbox on Hostinger
@@ -77,6 +79,7 @@ $body = '<div style="font-family:Arial,sans-serif; font-size:14px;">'
 	. '<p><strong>Name:</strong> ' . htmlspecialchars($name) . '</p>'
 	. '<p><strong>Email:</strong> ' . htmlspecialchars($email) . '</p>'
 	. '<p><strong>Phone:</strong> ' . htmlspecialchars($phone) . '</p>'
+	. '<p><strong>City:</strong> ' . htmlspecialchars($city) . '</p>'
 	. '<p><strong>Service:</strong> ' . htmlspecialchars($service) . '</p>'
 	. ($message !== '' ? '<p><strong>Message:</strong><br>' . nl2br(htmlspecialchars($message)) . '</p>' : '')
 	. '<p style="color:#6b7280; font-size:12px;">' . gmdate('c') . '</p>'
@@ -93,7 +96,7 @@ if (!is_dir($csv_dir)) { @mkdir($csv_dir, 0775, true); }
 $csv_file = $csv_dir . '/leads.csv';
 $fp = @fopen($csv_file, 'a');
 if ($fp) {
-	@fputcsv($fp, [gmdate('c'), $name, $email, $phone, $service, $message]);
+	@fputcsv($fp, [gmdate('c'), $name, $email, $phone, $city, $service, $message]);
 	@fclose($fp);
 }
 

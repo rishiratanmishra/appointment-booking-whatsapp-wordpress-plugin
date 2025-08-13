@@ -7,12 +7,35 @@
 	function setMsg(el, text, isError){el.textContent=text||''; el.classList.toggle('error', !!isError); el.classList.toggle('success', !isError);} 
 
 	var SERVICES = [
-		{ label: 'Web Design', value: 'web_design' },
-		{ label: 'Graphic Design', value: 'graphic_design' },
-		{ label: 'SEO', value: 'seo' },
-		{ label: 'Digital Marketing', value: 'digital_marketing' },
-		{ label: 'Other', value: 'other' }
-	];
+		'Home Cleaning','Living Room Cleaning','Sofa Cleaning','Sofa Dry Cleaning','Chair Cleaning','Carpet Cleaning','Mattress Cleaning','Curtains Cleaning','Floor Cleaning','Tiles Cleaning','Marble Polish','Kitchen Cleaning','Bathroom Cleaning','Painting Services','Pest Control','Blanket Cleaning','House Keeping','Car Cleaning','Office Cleaning','Façade Cleaning','Restaurant Cleaning','Hotel Cleaning','Water Tank Cleaning','Man Power Services'
+	].map(function(label){ return { label: label, value: label.toLowerCase().replace(/\s+/g,'_') }; });
+
+	function buildCarousel(){
+		var track = qs('#svcTrack'); if (!track) return;
+		track.innerHTML = '';
+		SERVICES.forEach(function(s){
+			var card = document.createElement('article');
+			card.className = 'carousel-card reveal';
+			var img = document.createElement('img');
+			img.src = './assets/img/service-placeholder.svg';
+			img.alt = s.label + ' image';
+			var body = document.createElement('div');
+			body.className = 'card-body';
+			var h3 = document.createElement('h3'); h3.textContent = s.label;
+			var p = document.createElement('p'); p.textContent = 'Professional ' + s.label.toLowerCase() + ' with trained staff and safe methods.';
+			body.appendChild(h3); body.appendChild(p);
+			card.appendChild(img); card.appendChild(body);
+			track.appendChild(card);
+		});
+		var vp = track.parentElement;
+		var prev = qs('#svcPrev'); var next = qs('#svcNext');
+		function scrollByCards(dir){
+			var width = vp.clientWidth || 300;
+			vp.scrollBy({ left: dir * width, behavior: 'smooth' });
+		}
+		if (prev) prev.addEventListener('click', function(){ scrollByCards(-1); });
+		if (next) next.addEventListener('click', function(){ scrollByCards(1); });
+	}
 
 	// Parallax
 	function setupParallax(){
@@ -58,14 +81,17 @@
 			});
 		}
 
-		// Populate services
-		var svc = qs('#service');
-		if (svc) {
+		// Populate services select
+		var svcSel = qs('#service');
+		if (svcSel) {
 			SERVICES.forEach(function(s){
 				var opt = document.createElement('option');
-				opt.value = s.value; opt.textContent = s.label; svc.appendChild(opt);
+				opt.value = s.value; opt.textContent = s.label; svcSel.appendChild(opt);
 			});
 		}
+
+		// Build services carousel
+		buildCarousel();
 
 		// Form handling
 		var form = qs('#lead-form');
@@ -79,6 +105,11 @@
 				var data = new FormData(form);
 				var ph = normalizePhone(String(data.get('phone')||''));
 				if (data.has('phone')) data.set('phone', ph);
+				if ((data.get('city')||'').trim() === ''){
+					setMsg(msg, 'Please enter your city.', true);
+					if (btn){ btn.disabled = false; btn.textContent = btn.dataset.old; }
+					return;
+				}
 				if (digits(ph).length < 7) {
 					setMsg(msg, 'Please enter a valid phone number (7+ digits).', true);
 					if (btn){ btn.disabled = false; btn.textContent = btn.dataset.old; }

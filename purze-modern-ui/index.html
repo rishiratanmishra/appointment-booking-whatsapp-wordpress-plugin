@@ -3,13 +3,36 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Purze Cleaning Services</title>
+	<title>Purze Professional Services | Housekeeping, Deep Cleaning, Pest Control, Handyman & Manpower</title>
+	<meta name="description" content="Purze Professional Services delivers housekeeping, deep cleaning, pest control, handyman and manpower solutions across Delhi, Haryana, Uttar Pradesh and Rajasthan. Call 8920535150 for reliable professionals.">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="./assets/css/style.css">
 	<link rel="icon" href="./assets/img/logo.svg">
 	<meta name="theme-color" content="#FF6A00">
+	<link rel="canonical" href="https://www.purzeprofessionalservices/">
+	<meta property="og:title" content="Purze Professional Services">
+	<meta property="og:description" content="Reliable Housekeeping, Deep Cleaning, Pest Control, Handyman & Manpower Solutions.">
+	<meta property="og:type" content="website">
+	<meta property="og:image" content="./assets/img/logo.svg">
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "LocalBusiness",
+		"name": "Purze Professional Services",
+		"url": "https://www.purzeprofessionalservices/",
+		"image": "https://www.purzeprofessionalservices/assets/img/logo.svg",
+		"telephone": "+918920535150",
+		"email": "info@purzeprofessionalservices",
+		"areaServed": ["Delhi", "Haryana", "Uttar Pradesh", "Rajasthan"],
+		"description": "Housekeeping, deep cleaning, pest control, handyman and manpower solutions.",
+		"sameAs": [
+			"https://facebook.com/",
+			"https://instagram.com/"
+		]
+	}
+	</script>
 </head>
 <body>
 	<header class="site-header">
@@ -20,10 +43,13 @@
 			</a>
 			<nav class="nav">
 				<a href="#services" class="nav-link reveal">Services</a>
-				<a href="#about" class="nav-link reveal">About</a>
+				<a href="#manpower" class="nav-link reveal">Manpower</a>
 				<a href="#contact" class="nav-link reveal">Contact</a>
 			</nav>
-			<button id="darkToggle" class="btn btn-dark reveal" aria-pressed="false" aria-label="Toggle dark mode">🌓</button>
+			<div class="header-cta reveal">
+				<a href="tel:+918920535150" class="nav-link">Call: 8920535150</a>
+				<a href="https://wa.me/918920535150" class="nav-link">WhatsApp</a>
+			</div>
 		</div>
 	</header>
 
@@ -36,13 +62,14 @@
 			</div>
 			<div class="container hero-grid">
 				<div class="hero-copy reveal">
-					<h1>Professional Cleaning Services</h1>
-					<p>Book trusted home and office cleaning. Transparent pricing, vetted professionals, and spotless results.</p>
+					<h1>Purze Professional Services</h1>
+					<p class="subhead">Reliable Housekeeping, Deep Cleaning, Pest Control, Handyman & Manpower Solutions</p>
+					<p>We go beyond just cleaning—we create safe, hygienic, and efficiently maintained spaces for homes, offices, and businesses across industries. Whether you need deep cleaning, disinfection, skilled manpower, or technical assistance, our professionally trained teams deliver with precision and reliability.</p>
 					<ul class="badges">
-						<li class="badge reveal">5-star Rated</li>
-						<li class="badge reveal">Insured Pros</li>
+						<li class="badge reveal">5/5 Rated</li>
+						<li class="badge reveal">Verified Staff</li>
 						<li class="badge reveal">Eco-friendly</li>
-						<li class="badge reveal">Flexible Slots</li>
+						<li class="badge reveal">Emergency Support</li>
 					</ul>
 					<div class="cta-row">
 						<a href="#lead-form" class="btn btn-primary reveal">Get a Free Quote</a>
@@ -52,14 +79,17 @@
 					<h2 id="lead-form-title">Request a Service</h2>
 					<form id="lead-form" novalidate>
 						<p class="hp"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label></p>
-						<label for="name">Name</label>
+						<label for="name">Your Name (Required)</label>
 						<input id="name" name="name" type="text" required>
 
-						<label for="email">Email</label>
+						<label for="email">Your Email (Required)</label>
 						<input id="email" name="email" type="email" required>
 
-						<label for="phone">Phone</label>
+						<label for="phone">Your Phone Number</label>
 						<input id="phone" name="phone" type="tel" required>
+
+						<label for="city">City Name (Required)</label>
+						<input id="city" name="city" type="text" required>
 
 						<label for="service">Select Service</label>
 						<select id="service" name="service" required>
@@ -80,34 +110,70 @@
 
 		<section id="services" class="section">
 			<div class="container">
-				<h2 class="reveal">Services</h2>
-				<div class="cards">
-					<div class="card reveal"><h3>Home Cleaning</h3><p>Deep and regular cleaning tailored to your home.</p></div>
-					<div class="card reveal"><h3>Office Cleaning</h3><p>Keep your workspace pristine and productive.</p></div>
-					<div class="card reveal"><h3>Move-in/Move-out</h3><p>End-of-lease cleans that pass inspection.</p></div>
+				<h2 class="reveal">Our Services</h2>
+				<p class="reveal">Housekeeping, Deep Cleaning, Pest Control, Handyman & Utility, and more. One-time or scheduled packages available.</p>
+				<div class="carousel">
+					<button class="carousel-btn prev" aria-label="Previous" id="svcPrev">‹</button>
+					<div class="carousel-viewport">
+						<div class="carousel-track" id="svcTrack" aria-live="polite">
+							<!-- Cards injected by JS -->
+						</div>
+					</div>
+					<button class="carousel-btn next" aria-label="Next" id="svcNext">›</button>
 				</div>
 			</div>
 		</section>
 
-		<section id="about" class="section muted">
+		<section class="section muted" id="manpower">
 			<div class="container">
-				<h2 class="reveal">About</h2>
-				<p class="reveal">We provide professional cleaning services with a focus on reliability, transparency, and quality.</p>
+				<h2 class="reveal">Manpower Services by Purze</h2>
+				<p class="reveal">Trained, verified, and cost-efficient workforce solutions with contracts starting at <strong>₹17,999/month</strong>.</p>
+				<div class="cards">
+					<div class="card reveal"><h3>Housekeeping Staff</h3><p>Residential, office, and commercial facilities.</p></div>
+					<div class="card reveal"><h3>Pantry Boys</h3><p>For offices, institutions, events.</p></div>
+					<div class="card reveal"><h3>Helpers & General Workers</h3><p>Labour-intensive tasks and logistics.</p></div>
+					<div class="card reveal"><h3>Warehouse Staff</h3><p>Loaders, pickers, packers, inventory support.</p></div>
+					<div class="card reveal"><h3>Hotel Staff</h3><p>Room service, kitchen helpers, stewards.</p></div>
+				</div>
+				<ul>
+					<li>Fully Trained and Background Verified</li>
+					<li>Flexible Contracts (Monthly/Quarterly/Yearly)</li>
+					<li>Replacement Guarantee</li>
+					<li>Uniformed, Professional, and Punctual Staff</li>
+					<li>Short-Term Projects or Long-Term Assignments</li>
+				</ul>
+			</div>
+		</section>
+
+		<section class="section">
+			<div class="container">
+				<h2 class="reveal">Why Purze?</h2>
+				<ul class="reveal">
+					<li>Trusted by Homes, Offices & Brands Nationwide</li>
+					<li>5/5 Customer Satisfaction Rating</li>
+					<li>Flexible Schedules & Emergency Support</li>
+					<li>Verified Staff • Latest Equipment • Safe Chemicals</li>
+					<li>Transparent Pricing • Multi-City Coverage</li>
+				</ul>
 			</div>
 		</section>
 
 		<section id="contact" class="section dark">
 			<div class="container center">
-				<h2 class="reveal">Ready for a spotless space?</h2>
-				<p class="reveal">Get a free quote in minutes.</p>
-				<a href="#lead-form" class="btn btn-accent reveal">Request Service</a>
+				<h2 class="reveal">Get in Touch Today</h2>
+				<p class="reveal">Let’s tailor a plan that fits your cleaning and manpower needs.</p>
+				<p class="reveal">
+					<a href="tel:+918920535150" class="btn btn-accent">Call 8920535150</a>
+					<a href="mailto:info@purzeprofessionalservices" class="btn btn-primary">Email Us</a>
+				</p>
+				<p class="reveal" style="opacity:.9;">Cities Served: Delhi, Haryana, Uttar Pradesh, Rajasthan</p>
 			</div>
 		</section>
 	</main>
 
 	<footer class="site-footer">
 		<div class="container footer-inner">
-			<div>© <span id="year"></span> Purze</div>
+			<div>© <span id="year"></span> Purze • <a href="https://www.purzeprofessionalservices/">www.purzeprofessionalservices</a></div>
 			<nav class="socials">
 				<a href="#" aria-label="Facebook" class="reveal">Facebook</a>
 				<a href="#" aria-label="Instagram" class="reveal">Instagram</a>
