@@ -86,6 +86,17 @@ input:focus, select:focus, textarea:focus { border-color: var(--primary); box-sh
 .socials { display: flex; gap: 12px; }
 .socials a { color: #e2e8f0; text-decoration: none; }
 
+/* Parallax layers */
+.parallax { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.plx { position: absolute; border-radius: 50%; filter: blur(30px); opacity: .35; }
+.plx-1 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(255,106,0,.35), transparent 60%); top: -150px; left: -150px; }
+.plx-2 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(245,158,11,.35), transparent 60%); top: 200px; right: -120px; }
+.plx-3 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(15,23,42,.25), transparent 60%); bottom: -150px; left: 20%; }
+
+/* Reveal animations */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.in { opacity: 1; transform: translateY(0); }
+
 /* Responsive */
 @media (max-width: 1024px) {
 	.hero-grid { grid-template-columns: 1fr; }

@@ -14,6 +14,36 @@
 		{ label: 'Other', value: 'other' }
 	];
 
+	// Parallax
+	function setupParallax(){
+		var layers = qsa('.plx');
+		if (!layers.length) return;
+		function onScroll(){
+			var y = window.scrollY || window.pageYOffset;
+			layers.forEach(function(layer){
+				var speed = parseFloat(layer.getAttribute('data-speed')||'0.2');
+				layer.style.transform = 'translate3d(0,' + (y * speed) + 'px,0)';
+			});
+		}
+		onScroll();
+		window.addEventListener('scroll', onScroll, { passive: true });
+	}
+
+	// Reveal on view
+	function setupReveal(){
+		var items = qsa('.reveal');
+		if (!items.length) return;
+		var io = new IntersectionObserver(function(entries){
+			entries.forEach(function(entry){
+				if (entry.isIntersecting) {
+					entry.target.classList.add('in');
+					io.unobserve(entry.target);
+				}
+			});
+		},{ threshold: 0.1 });
+		items.forEach(function(el){ io.observe(el); });
+	}
+
 	document.addEventListener('DOMContentLoaded', function(){
 		var y = qs('#year'); if (y) { y.textContent = new Date().getFullYear(); }
 		var toggle = qs('#darkToggle');
@@ -39,44 +69,48 @@
 
 		// Form handling
 		var form = qs('#lead-form');
-		if (!form) return;
-		var btn = qs('#submitBtn');
-		var msg = qs('#formMsg');
-		form.addEventListener('submit', function(e){
-			e.preventDefault();
-			setMsg(msg, '', false);
-			if (btn){ btn.disabled = true; btn.dataset.old = btn.textContent; btn.textContent = 'Sending…'; }
-			var data = new FormData(form);
-			var ph = normalizePhone(String(data.get('phone')||''));
-			if (data.has('phone')) data.set('phone', ph);
-			if (digits(ph).length < 7) {
-				setMsg(msg, 'Please enter a valid phone number (7+ digits).', true);
-				if (btn){ btn.disabled = false; btn.textContent = btn.dataset.old; }
-				scrollToEl(msg); return;
-			}
-			fetch('submit.php', {
-				method: 'POST',
-				credentials: 'same-origin',
-				headers: { 'Accept': 'application/json' },
-				body: data
-			})
-			.then(function(r){ return r.json(); })
-			.then(function(res){
-				if (res && res.success) {
-					setMsg(msg, res.message || 'Thank you! We will be in touch shortly.');
-					form.reset();
-				} else {
-					var err = res && res.message ? res.message : 'Submission failed. Please try again.';
-					setMsg(msg, err, true);
-					if (res && res.errors) {
-						var key = Object.keys(res.errors)[0];
-						var input = qs('[name="'+key+'"]', form); if (input) input.focus();
-					}
+		if (form) {
+			var btn = qs('#submitBtn');
+			var msg = qs('#formMsg');
+			form.addEventListener('submit', function(e){
+				e.preventDefault();
+				setMsg(msg, '', false);
+				if (btn){ btn.disabled = true; btn.dataset.old = btn.textContent; btn.textContent = 'Sending…'; }
+				var data = new FormData(form);
+				var ph = normalizePhone(String(data.get('phone')||''));
+				if (data.has('phone')) data.set('phone', ph);
+				if (digits(ph).length < 7) {
+					setMsg(msg, 'Please enter a valid phone number (7+ digits).', true);
+					if (btn){ btn.disabled = false; btn.textContent = btn.dataset.old; }
+					scrollToEl(msg); return;
 				}
-				scrollToEl(msg);
-			})
-			.catch(function(){ setMsg(msg, 'Network error. Please try again.', true); })
-			.finally(function(){ if (btn){ btn.disabled = false; btn.textContent = btn.dataset.old; } });
-		});
+				fetch('submit.php', {
+					method: 'POST',
+					credentials: 'same-origin',
+					headers: { 'Accept': 'application/json' },
+					body: data
+				})
+				.then(function(r){ return r.json(); })
+				.then(function(res){
+					if (res && res.success) {
+						setMsg(msg, res.message || 'Thank you! We will be in touch shortly.');
+						form.reset();
+					} else {
+						var err = res && res.message ? res.message : 'Submission failed. Please try again.';
+						setMsg(msg, err, true);
+						if (res && res.errors) {
+							var key = Object.keys(res.errors)[0];
+							var input = qs('[name="'+key+'"]', form); if (input) input.focus();
+						}
+					}
+					scrollToEl(msg);
+				})
+				.catch(function(){ setMsg(msg, 'Network error. Please try again.', true); })
+				.finally(function(){ if (btn){ btn.disabled = false; btn.textContent = btn.dataset.old; } });
+			});
+		}
+
+		setupParallax();
+		setupReveal();
 	});
 })();
